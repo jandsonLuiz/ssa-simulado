@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSA 1 Simulados — Prepare-se para a UPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== BARRA DE NAVEGAÇÃO ===================== -->
+<header class="app-header" id="app-header">
+  <div class="header-inner">
+    <button class="brand" id="btn-brand" aria-label="Ir para o início">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 3 2 8l10 5 8-4.2V16h1.5V8L12 3Z" fill="currentColor"/><path d="M6 12.2V17c0 1.8 2.7 3.3 6 3.3s6-1.5 6-3.3v-4.8l-6 3-6-3Z" fill="currentColor" opacity=".55"/></svg>
+      </span>
+      <span class="brand-text">SSA 1 <strong>Simulados</strong></span>
+    </button>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+      <button class="nav-link" data-nav="dashboard">Início</button>
+      <button class="nav-link" data-nav="select">Simulados</button>
+      <button class="nav-link" data-nav="bank">Banco de Questões</button>
+      <button class="nav-link" data-nav="stats">Estatísticas</button>
+      <button class="nav-link" data-nav="settings">Configurações</button>
+    </nav>
+
+    <button class="icon-btn" id="btn-nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="app-main">
+
+  <!-- ===================== DASHBOARD ===================== -->
+  <section class="screen" id="screen-dashboard" data-screen>
+    <div class="container">
+
+      <div class="hero-row">
+        <div>
+          <p class="eyebrow-plain">Painel de estudos</p>
+          <h1 class="greeting" id="dashboard-greeting">Bem-vindo(a) de volta</h1>
+          <p class="hero-sub">Continue de onde parou e chegue preparado(a) para o SSA 1.</p>
+        </div>
+        <button class="btn btn-primary btn-lg" data-nav="select">
+          Começar simulado
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="stat-grid" id="dashboard-stats">
+        <!-- preenchido via JS -->
+      </div>
+
+      <div class="dash-columns">
+        <div class="col-main">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Progresso geral</h2>
+            </div>
+            <div class="progress-overview" id="progress-overview"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Últimos simulados</h2>
+              <button class="link-btn" data-nav="stats">Ver histórico completo</button>
+            </div>
+            <div id="recent-list" class="recent-list"></div>
+          </div>
+        </div>
+
+        <div class="col-side">
+          <div class="panel">
+            <div class="panel-head"><h2>Disciplinas</h2></div>
+            <div id="subject-perf" class="subject-perf"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Metas de estudo</h2>
+              <button class="link-btn" id="btn-add-goal">+ Nova meta</button>
+            </div>
+            <div id="goals-list" class="goals-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SELEÇÃO DE SIMULADO ===================== -->
+  <section class="screen" id="screen-select" data-screen>
+    <div class="container">
+      <p class="eyebrow-plain">Simulados</p>
+      <h1 class="page-title">Escolha como quer estudar</h1>
+
+      <div class="mode-tabs" id="mode-tabs">
+        <button class="mode-tab is-active" data-mode="completo">Completo</button>
+        <button class="mode-tab" data-mode="disciplina">Por disciplina</button>
+        <button class="mode-tab" data-mode="assunto">Por assunto</button>
+        <button class="mode-tab" data-mode="personalizado">Personalizado</button>
+      </div>
+
+      <div class="filter-bar panel" id="filter-bar">
+        <div class="field" id="field-subject">
+          <label for="f-subject">Disciplina</label>
+          <select id="f-subject"><option value="todas">Todas</option></select>
+        </div>
+        <div class="field" id="field-topic">
+          <label for="f-topic">Assunto</label>
+          <select id="f-topic"><option value="todos">Todos</option></select>
+        </div>
+        <div class="field">
+          <label for="f-count">Quantidade de questões</label>
+          <select id="f-count">
+            <option value="5">5 questões</option>
+            <option value="10" selected>10 questões</option>
+            <option value="15">15 questões</option>
+            <option value="20">20 questões</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-difficulty">Dificuldade</label>
+          <select id="f-difficulty">
+            <option value="todas">Todas</option>
+            <option value="fácil">Fácil</option>
+            <option value="médio">Médio</option>
+            <option value="difícil">Difícil</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-status">Questões</label>
+          <select id="f-status">
+            <option value="todas">Todas</option>
+            <option value="ineditas">Somente inéditas</option>
+            <option value="respondidas">Já respondidas</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="preset-grid" id="preset-grid"></div>
+
+      <div class="select-footer">
+        <p id="select-summary" class="select-summary"></p>
+        <button class="btn btn-primary btn-lg" id="btn-start-simulado">Iniciar simulado</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TELA DE QUESTÕES (PROVA) ===================== -->
+  <section class="screen screen-quiz" id="screen-quiz" data-screen>
+    <div class="quiz-topbar">
+      <div class="quiz-topbar-inner">
+        <button class="icon-btn" id="btn-quiz-exit" aria-label="Sair do simulado">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-label">
+            <span id="quiz-q-current">1</span>/<span id="quiz-q-total">10</span>
+            <span class="quiz-progress-name" id="quiz-sim-name"></span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="quiz-progress-fill"></div></div>
+        </div>
+        <div class="quiz-timer" id="quiz-timer">--:--</div>
+      </div>
+    </div>
+
+    <div class="container container-narrow quiz-body">
+      <div class="quiz-tags">
+        <span class="tag" id="quiz-subject-tag">Disciplina</span>
+        <span class="tag tag-muted" id="quiz-topic-tag">Assunto</span>
+        <span class="tag tag-diff" id="quiz-diff-tag">Médio</span>
+      </div>
+
+      <h2 class="question-statement" id="quiz-statement"></h2>
+
+      <div class="alternatives" id="quiz-alternatives"></div>
+
+      <button class="flag-btn" id="btn-flag-review">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 3v18M6 4h11l-2.5 3.5L17 11H6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        Marcar para revisão
+      </button>
+    </div>
+
+    <div class="quiz-bottombar">
+      <div class="quiz-bottombar-inner">
+        <button class="btn btn-ghost" id="btn-quiz-prev">Anterior</button>
+        <div class="quiz-nav-track" id="quiz-nav-track" role="tablist" aria-label="Navegação entre questões"></div>
+        <button class="btn btn-primary" id="btn-quiz-next">Próxima</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTADO ===================== -->
+  <section class="screen" id="screen-result" data-screen>
+    <div class="container container-narrow">
+      <p class="eyebrow-plain">Resultado</p>
+      <h1 class="page-title" id="result-title">Simulado concluído</h1>
+
+      <div class="result-hero panel">
+        <div class="score-ring-wrap">
+          <svg viewBox="0 0 140 140" class="score-ring" id="score-ring">
+            <circle cx="70" cy="70" r="60" class="score-ring-bg"/>
+            <circle cx="70" cy="70" r="60" class="score-ring-fg" id="score-ring-fg"/>
+          </svg>
+          <div class="score-ring-label">
+            <span id="score-percent">0%</span>
+            <small>aproveitamento</small>
+          </div>
+        </div>
+        <div class="result-metrics">
+          <div class="metric"><span class="metric-value" id="result-correct">0</span><span class="metric-label">Acertos</span></div>
+          <div class="metric"><span class="metric-value" id="result-wrong">0</span><span class="metric-label">Erros</span></div>
+          <div class="metric"><span class="metric-value" id="result-time">0min</span><span class="metric-label">Tempo</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Desempenho por disciplina</h2></div>
+        <div id="result-subject-chart" class="bar-chart"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Questões erradas</h2></div>
+        <div id="result-wrong-list" class="wrong-list"></div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-ghost" id="btn-result-home">Voltar ao início</button>
+        <button class="btn btn-secondary" id="btn-result-redo">Refazer simulado</button>
+        <button class="btn btn-primary" id="btn-result-review">Revisar questões</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REVISÃO DE QUESTÕES ===================== -->
+  <section class="screen" id="screen-review" data-screen>
+    <div class="container container-narrow">
+      <p class="eyebrow-plain">Revisão</p>
+      <h1 class="page-title">Aprenda com os erros</h1>
+      <div id="review-list" class="review-list"></div>
+      <div class="result-actions">
+        <button class="btn btn-primary" data-nav="dashboard">Concluir revisão</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BANCO DE QUESTÕES ===================== -->
+  <section class="screen" id="screen-bank" data-screen>
+    <div class="container">
+      <p class="eyebrow-plain">Banco de questões</p>
+      <h1 class="page-title">Explore todas as questões</h1>
+
+      <div class="filter-bar panel">
+        <div class="field">
+          <label for="b-subject">Disciplina</label>
+          <select id="b-subject"><option value="todas">Todas</option></select>
+        </div>
+        <div class="field">
+          <label for="b-topic">Assunto</label>
+          <select id="b-topic"><option value="todos">Todos</option></select>
+        </div>
+        <div class="field">
+          <label for="b-difficulty">Dificuldade</label>
+          <select id="b-difficulty">
+            <option value="todas">Todas</option>
+            <option value="fácil">Fácil</option>
+            <option value="médio">Médio</option>
+            <option value="difícil">Difícil</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="b-status">Status</label>
+          <select id="b-status">
+            <option value="todas">Todas</option>
+            <option value="nao-respondida">Não respondida</option>
+            <option value="respondida">Respondida</option>
+            <option value="errada">Errada</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="bank-count" id="bank-count"></p>
+      <div id="bank-list" class="bank-list"></div>
+    </div>
+  </section>
+
+  <!-- ===================== ESTATÍSTICAS ===================== -->
+  <section class="screen" id="screen-stats" data-screen>
+    <div class="container">
+      <p class="eyebrow-plain">Estatísticas</p>
+      <h1 class="page-title">Sua evolução</h1>
+
+      <div class="stat-grid" id="stats-summary"></div>
+
+      <div class="dash-columns">
+        <div class="col-main">
+          <div class="panel">
+            <div class="panel-head"><h2>Evolução dos resultados</h2></div>
+            <div id="evolution-chart" class="line-chart-wrap"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Histórico de simulados</h2></div>
+            <div id="history-list" class="recent-list"></div>
+          </div>
+        </div>
+        <div class="col-side">
+          <div class="panel">
+            <div class="panel-head"><h2>Desempenho por disciplina</h2></div>
+            <div id="stats-subject-chart" class="bar-chart bar-chart-v"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Assuntos com mais erros</h2></div>
+            <div id="stats-worst-topics" class="topic-error-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONFIGURAÇÕES ===================== -->
+  <section class="screen" id="screen-settings" data-screen>
+    <div class="container container-narrow">
+      <p class="eyebrow-plain">Configurações</p>
+      <h1 class="page-title">Ajuste sua experiência</h1>
+
+      <div class="panel settings-panel">
+        <div class="settings-row">
+          <div>
+            <h3>Nome do estudante</h3>
+            <p class="settings-desc">Usado nas saudações do painel.</p>
+          </div>
+          <div class="settings-control">
+            <input type="text" id="s-name" class="text-input" maxlength="40" placeholder="Seu nome">
+            <button class="btn btn-secondary btn-sm" id="btn-save-name">Salvar</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <h3>Tema escuro</h3>
+            <p class="settings-desc">Alterne entre claro e escuro.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="s-theme">
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <h3>Cronômetro nos simulados</h3>
+            <p class="settings-desc">Exibe o tempo decorrido durante a prova.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="s-timer" checked>
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+          </label>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <h3>Limpar histórico</h3>
+            <p class="settings-desc">Remove os simulados concluídos e estatísticas. As questões continuam disponíveis.</p>
+          </div>
+          <button class="btn btn-outline-danger btn-sm" id="btn-clear-history">Limpar histórico</button>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <h3>Reiniciar progresso</h3>
+            <p class="settings-desc">Apaga todo o progresso salvo neste navegador, incluindo respostas e metas.</p>
+          </div>
+          <button class="btn btn-danger btn-sm" id="btn-reset-progress">Reiniciar tudo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== MODAL GENÉRICO ===================== -->
+<div class="modal-overlay" id="modal-overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h3 id="modal-title">Título</h3>
+    <p id="modal-message">Mensagem</p>
+    <div class="modal-actions" id="modal-actions"></div>
+  </div>
+</div>
+
+<!-- ===================== TOAST ===================== -->
+<div class="toast" id="toast" hidden></div>
+
+<script src="script.js"></script>
+</body>
+</html>
